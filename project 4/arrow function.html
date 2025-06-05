@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Arrow Function Example</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 100px;
+    }
+    form {
+      display: inline-block;
+      padding: 20px;
+      border: 2px solid #333;
+      border-radius: 10px;
+      background-color: #f9f9f9;
+    }
+    input {
+      padding: 8px;
+      margin: 10px;
+      border-radius: 5px;
+      border: 1px solid #999;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+  <form id="squareForm">
+    <h2>Find Square using Arrow Function</h2>
+    <input type="number" id="num" placeholder="Enter a number" required />
+    <br />
+    <button type="submit">Calculate</button>
+  </form>
+
+  <script>
+  
+    const square = num => num * num;
+
+   
+    document.getElementById("squareForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      const input = document.getElementById("num").value;
+      const result = square(Number(input));
+      alert(`Square of ${input} is ${result}`);
+    });
+  </script>
+
+</body>
+</html>

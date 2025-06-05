@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Factorial Calculator (Recursive)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 100px;
+    }
+    form {
+      display: inline-block;
+      padding: 20px;
+      background-color: #f1f1f1;
+      border-radius: 10px;
+      border: 2px solid #555;
+    }
+    input {
+      padding: 10px;
+      margin: 10px;
+      border-radius: 5px;
+      border: 1px solid #aaa;
+      width: 150px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+
+  <form id="factorialForm">
+    <h2>Recursive Factorial Calculator</h2>
+    <input type="number" id="number" placeholder="Enter a number" required min="0" />
+    <br />
+    <button type="submit">Calculate Factorial</button>
+  </form>
+
+  <script>
+    // Recursive function to calculate factorial
+    function factorial(n) {
+      if (n === 0 || n === 1) {
+        return 1;
+      } else {
+        return n * factorial(n - 1);
+      }
+    }
+
+    document.getElementById("factorialForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const num = parseInt(document.getElementById("number").value);
+      if (num < 0) {
+        alert("Please enter a non-negative number.");
+      } else {
+        const result = factorial(num);
+        alert(`Factorial of ${num} is ${result}`);
+      }
+    });
+  </script>
+
+</body>
+</html>

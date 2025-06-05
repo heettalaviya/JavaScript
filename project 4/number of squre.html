@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Square Calculator</title>
+</head>
+<body>
+  <h2>Square Calculator</h2>
+
+  <form id="squareForm">
+    <label for="num">Enter a number:</label>
+    <input type="number" id="num" required />
+    <input type="submit" value="Get Square" />
+  </form>
+
+  <script>
+    document.getElementById("squareForm").addEventListener("submit", function(e) {
+      e.preventDefault(); // Prevent page reload
+
+      let number = parseFloat(document.getElementById("num").value);
+      let square = Math.pow(number, 2);
+
+      alert("You entered: " + number + "\nSquare: " + square);
+    });
+  </script>
+</body>
+</html>

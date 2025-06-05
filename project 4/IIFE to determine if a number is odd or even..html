@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IIFE to determine if a number is odd or even.</title>
+</head>
+<body>
+    <script>
+        (function() {
+            function checkOddEven(number) {
+                return number % 2 === 0 ? "even" : "odd";
+            }
+
+            let num = 5; 
+            let result = checkOddEven(num);
+            console.log(`The number ${num} is ${result}.`);
+        })();
+    </script>
+</body>
+</html>
