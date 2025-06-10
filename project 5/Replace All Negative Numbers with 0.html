@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Replace Negative Numbers</title>
+</head>
+<body>
+
+<h2>Replace All Negative Numbers with 0</h2>
+
+<script>
+  let numbers = [5, -3, 8, -1, 0, -7, 4];
+
+  let replaced = numbers.map(num => num < 0 ? 0 : num);
+
+  alert("Updated Array: " + replaced.join(", "));
+</script>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Second Highest Number</title>
+</head>
+<body>
+
+<h2>Find the Second Highest Number in an Array</h2>
+
+<script>
+  
+  let numbers = [10, 25, 3, 76, 45, 76];
+
+  let uniqueSorted = [...new Set(numbers)].sort((a, b) => b - a);
+
+  let secondHighest = uniqueSorted[1];
+
+  if (secondHighest !== undefined) {
+    alert("Second highest number is: " + secondHighest);
+  } else {
+    alert("Array does not have enough unique numbers.");
+  }
+</script>
+
+</body>
+</html>

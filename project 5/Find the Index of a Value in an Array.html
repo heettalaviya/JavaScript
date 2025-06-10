@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Find Index</title>
+</head>
+<body>
+
+<h2>Find the Index of a Value in an Array</h2>
+
+<script>
+ 
+  let fruits = ["apple", "banana", "mango", "orange", "grape"];
+
+  let valueToFind = "mango";
+
+  let index = fruits.indexOf(valueToFind);
+
+  if (index !== -1) {
+    alert("Index of '" + valueToFind + "': " + index);
+  } else {
+    alert("'" + valueToFind + "' not found in the array.");
+  }
+</script>
+
+</body>
+</html>
