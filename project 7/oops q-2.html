@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Bank Account details</title>
+</head>
+
+<body>
+    <script>
+        class BankAccount {
+            constructor(accountNumber, balance = 0) {
+                this.accountNumber = accountNumber;
+                this.balance = balance;
+            }
+
+            deposit(amount) {
+                this.balance += amount;
+                document.writeln(`Deposited: ${amount}<br>`);
+            }
+
+            withdraw(amount) {
+                if (amount <= this.balance) {
+                    this.balance -= amount;
+                    document.writeln(`Withdrawn: ${amount}<br>`);
+                } else {
+                    document.writeln("Insufficient balance<br>");
+                }
+            }
+
+            getBalance() {
+                return this.balance;
+            }
+        }
+
+        const accNo = prompt("Enter Account Number:",);
+        const opening = Number(prompt("Enter Opening Balance:", "1500"));
+
+        const account1 = new BankAccount(accNo, opening);
+
+        document.writeln(`A/c No.: ${account1.accountNumber}<br>`);
+        document.writeln(`Opening Balance: ${account1.getBalance()}<br>`);
+
+        const depositAmt = Number(prompt("Enter amount to deposit:"));
+        account1.deposit(depositAmt);
+
+        const firstWithdrawal = Number(prompt("Enter amount to withdraw:"));
+        account1.withdraw(firstWithdrawal);
+        document.writeln(`Account Balance: ${account1.getBalance()}<br>`);
+
+    </script>
+</body>
+
+</html>
