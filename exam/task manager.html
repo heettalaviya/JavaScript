@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .task-form, .task-list, .filters {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .task-form input, .task-form select {
+            width: calc(50% - 12px);
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .task-form button {
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .task-form button:hover {
+            background: #45a049;
+        }
+        .filters select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .task-item {
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            background: #fafafa;
+            transition: transform 0.2s ease;
+        }
+        .task-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .task-item.high { border-left: 6px solid #e74c3c; }
+        .task-item.medium { border-left: 6px solid #f39c12; }
+        .task-item.low { border-left: 6px solid #2ecc71; }
+        .task-item h4 {
+            margin: 0;
+            color: #333;
+        }
+        .task-item p {
+            margin: 5px 0;
+            color: #555;
+        }
+        .task-item button {
+            padding: 5px 10px;
+            margin: 5px 5px 0 0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .task-item button:first-of-type {
+            background: #3498db;
+            color: white;
+        }
+        .task-item button:last-of-type {
+            background: #e74c3c;
+            color: white;
+        }
+        .task-item button:hover:first-of-type {
+            background: #2980b9;
+        }
+        .task-item button:hover:last-of-type {
+            background: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <h1>Task Manager</h1>
+
+    <div class="task-form">
+        <h3>Add Task</h3>
+        <input type="text" id="title" placeholder="Title">
+        <input type="text" id="description" placeholder="Description">
+        <input type="date" id="dueDate">
+        <select id="priority">
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+        </select>
+        <button onclick="addTask()">Add Task</button>
+    </div>
+
+    <div class="filters">
+        <h3>Filter by Priority</h3>
+        <select id="filterPriority" onchange="filterTasks()">
+            <option value="all">All</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+        </select>
+    </div>
+
+    <div class="task-list" id="taskList"></div>
+
+    <script>
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+        function saveTasks() {
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+
+        function addTask() {
+            const title = document.getElementById('title').value.trim();
+            const description = document.getElementById('description').value.trim();
+            const dueDate = document.getElementById('dueDate').value;
+            const priority = document.getElementById('priority').value;
+
+            if (!title || !dueDate) {
+                alert('Title and Due Date are required.');
+                return;     
+            }
+
+            const task = {
+                id: Date.now(),
+                title,
+                description,
+                dueDate,
+                priority
+            };
+
+            tasks.push(task);
+            saveTasks();
+            displayTasks();
+
+            document.getElementById('title').value = '';
+            document.getElementById('description').value = '';
+            document.getElementById('dueDate').value = '';
+            document.getElementById('priority').value = 'low';
+        }
+
+        function displayTasks(filteredTasks = tasks) {
+            const taskList = document.getElementById('taskList');
+            taskList.innerHTML = '';
+            filteredTasks.forEach(task => {
+                const taskItem = document.createElement('div');
+                taskItem.className = `task-item ${task.priority}`;
+                taskItem.innerHTML = `
+                    <h4>${task.title}</h4>
+                    <p>${task.description}</p>
+                    <p>Due: ${task.dueDate}</p>
+                    <p>Priority: ${task.priority}</p>
+                    <button onclick="editTask(${task.id})">Edit</button>
+                    <button onclick="deleteTask(${task.id})">Delete</button>
+                `;
+                taskList.appendChild(taskItem);
+            });
+        }
+
+        function editTask(id) {
+            const task = tasks.find(t => t.id === id);
+            const newTitle = prompt('Edit Title:', task.title);
+            const newDescription = prompt('Edit Description:', task.description);
+            const newDueDate = prompt('Edit Due Date:', task.dueDate);
+            const newPriority = prompt('Edit Priority (low, medium, high):', task.priority);
+
+            if (newTitle && newDueDate) {
+                task.title = newTitle;
+                task.description = newDescription;
+                task.dueDate = newDueDate;
+                task.priority = newPriority;
+                saveTasks();
+                displayTasks();
+            }
+        }
+
+        function deleteTask(id) {
+            tasks = tasks.filter(t => t.id !== id);
+            saveTasks();
+            displayTasks();
+        }
+
+        function filterTasks() {
+            const filterValue = document.getElementById('filterPriority').value;
+            if (filterValue === 'all') {
+                displayTasks();
+            } else {
+                const filtered = tasks.filter(task => task.priority === filterValue);
+                displayTasks(filtered);
+            }
+        }
+
+        window.onload = () => displayTasks();
+    </script>
+</body>
+</html>
+
+
+
+ 
+
+
+
+
+
